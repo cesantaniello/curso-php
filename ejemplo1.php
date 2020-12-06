@@ -7,7 +7,17 @@
 </head>
 <body>
     <?php
-    echo '<b>Hola!</b>';
+    echo '<b>Hola!</b><br/>';
+
+    $nombre = "Carlos";
+
+    echo '<b>' . $nombre . '<b><br>';
+
+    $num1 = 1;
+    $num2 = 2;
+    $total = $num1 + $num2;
+
+    echo 'La suma de ' . $num1 . ' y ' . $num2 . ' es: ' . $total;
     ?>
 </body>
 </html>
