@@ -40,11 +40,14 @@
                 <input type="text" name="tel" class="form-control" id="tel">
             </div>
 
-            <center><input type="submit" value="Enviar" class="btn btn-success" name="btn1"></center>
+            <center>
+                <input type="submit" value="Enviar" class="btn btn-success" name="btn1">
+                <input type="submit" value="Consultar" class="btn btn-info" name="btn2">
+            </center>
         </form>
 
         <?php
-
+            //Crear entrada en BB. DD.
             if(isset($_POST['btn1'])){
                 include("abrir_conexion.php");
 
@@ -58,6 +61,40 @@
 
                 include("cerrar_conexion.php");
                 echo "Se insertaron correctamente los datos";
+            }
+            
+            //Consulta en BB. DD.
+            if(isset($_POST['btn2'])){
+                include("abrir_conexion.php");
+
+                $doc = $_POST['doc'];
+
+                $resultados = mysqli_query($conexion, "SELECT * FROM $tabla_db1 WHERE doc = $doc");
+                while($consulta = mysqli_fetch_array($resultados))
+                {
+                    echo
+                    "
+                        <table width=\"100%\" border=\"1\">
+                            <tr>
+                                <td><b><center>Documento</center></b></td>
+                                <td><b><center>Nombre</center></b></td>
+                                <td><b><center>Direccion</center></b></td>
+                                <td><b><center>Telefono</center></b></td>                                
+                            <tr>
+                            <tr>
+                                <td>". $consulta['doc'] . "</td>
+                                <td>". $consulta['nombre'] . "</td>
+                                <td>". $consulta['direccion'] . "</td>
+                                <td>". $consulta['telefono'] . "</td>                                
+                            </tr>
+                        </table>
+                    ";
+
+                    echo $consulta['nombre'];
+                    echo "<br>";
+                }
+
+                include("cerrar_conexion.php");
             }
 
         ?>
