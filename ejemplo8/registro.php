@@ -80,7 +80,18 @@
             }
 
             if(isset($_POST['btn_registrar'])){
-                echo "Presiono el botón Registrar";
+                $doc = $_POST['doc'];
+                $nombre = $_POST['nombre'];
+                $dir = $_POST['dir'];
+                $tel = $_POST['tel'];
+
+                if($doc == "" || $nombre == "" || $dir == ""){
+                    echo "los campos son obligatorios";
+                }
+                else{
+                    mysqli_query($conexion, "INSERT INTO $tabla_db1 (doc, nombre, direccion, telefono)
+                                                              values('$doc', '$nombre', '$dir', '$tel')");
+                }
             }
 
             if(isset($_POST['btn_actualizar'])){
