@@ -95,11 +95,59 @@
             }
 
             if(isset($_POST['btn_actualizar'])){
-                echo "Presiono el botón Actualizar";
+                $doc = $_POST['doc'];
+                $nombre = $_POST['nombre'];
+                $dir = $_POST['dir'];
+                $tel = $_POST['tel'];
+
+                if($doc == "" || $nombre == "" || $dir == ""){
+                    echo "los campos son obligatorios";
+                }
+                else{
+                    $existe = 0;
+                    $resultados = mysqli_query($conexion, "SELECT * FROM $tabla_db1 WHERE doc = '$doc'");
+                    while($consulta = mysqli_fetch_array($resultados)){
+                        $existe++;                    
+                    }
+                    if($existe == 0){
+                        echo "El documento no existe";
+                    }
+                    else{
+
+                    $_UPDATE_SQL = "UPDATE $tabla_db1 Set 
+                    doc = '$doc',
+                    nombre = '$nombre',
+                    direccion = '$dir', 
+                    telefono = '$tel'
+
+                    WHERE doc = '$doc'";
+                    
+                    mysqli_query($conexion, $_UPDATE_SQL);
+                    echo "Actualización con éxito";
+                    }
+                }
             }
 
             if(isset($_POST['btn_eliminar'])){
-                echo "Presiono el botón Eliminar";
+                $doc = $_POST['doc'];
+                $existe = 0;
+
+                if($doc=""){
+                    echo "El documento es un campo obligatorio";
+                }
+                else{
+                    $resultados = mysqli_query($conexion, "SELECT * FROM $tabla_db1 WHERE doc = '$doc'");
+                    while($consulta = mysqli_fetch_array($resultados)){
+                        $existe++;                    
+                    }
+                    if($existe == 0){
+                        echo "El documento no existe";
+                    }
+                    else{
+                        $_DELETE_SQL = "DELETE FROM $tabla_db1 WHERE doc = '$doc'";
+                        mysqli_query($conexion, $_DELETE_SQL);
+                    }
+                }
             }
             
             include("cerrar_conexion.php");
