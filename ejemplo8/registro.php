@@ -45,8 +45,8 @@
     </div>
     
     <center>
-      <input type="submit" value="Registrar" class="btn btn-success" name="btn_registrar">
       <input type="submit" value="Consultar" class="btn btn-primary" name="btn_consultar">
+      <input type="submit" value="Registrar" class="btn btn-success" name="btn_registrar">
       <input type="submit" value="Actualizar" class="btn btn-info" name="btn_actualizar">
       <input type="submit" value="Eliminar" class="btn btn-danger" name="btn_eliminar">
     </center>
@@ -61,14 +61,32 @@
       $dir    ="";
       $tel    ="";
 
+      if(isset($_POST['btn_consultar']))
+        $doc = $_POST['doc'];
+        $existe = 0;
+
+        if ($doc ==""){
+          echo "El documento es un campo obligatorio";
+        }else{
+
+          //CONSULTAR
+          $resultados = mysqli_query($conexion,"SELECT * FROM $tabla_db1 WHERE doc = '$doc'");
+          while($consulta = mysqli_fetch_array($resultados))
+          {
+            echo $consulta['doc']."<br>";
+            echo $consulta['nombre']."<br>";
+            echo $consulta['direccion']."<br>";
+            echo $consulta['telefono']."<br>";
+            $existe++;          
+          }
+          if($existe == 0){
+            echo "El documento no existe";
+          }
+        }
+
       if(isset($_POST['btn_registrar']))
       {      
         echo "Presiono el boton Registrar";
-      }
-
-      if(isset($_POST['btn_consultar']))
-      {
-        echo "Presiono el boton consultar";
       }
 
       if(isset($_POST['btn_actualizar']))
