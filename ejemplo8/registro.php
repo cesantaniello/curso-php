@@ -84,14 +84,44 @@
           }
         }
 
-      if(isset($_POST['btn_registrar']))
-      {      
-        echo "Presiono el boton Registrar";
+      if(isset($_POST['btn_registrar'])){
+        $doc = $_POST['doc'];
+        $nombre = $_POST['nombre'];
+        $dir = $_POST['dir'];
+        $tel = $_POST['tel'];        
+        
+        if ($doc =="" || $nombre =="" || $dir ==""){
+          echo "Los campos son obligatorios";
+        }else{
+          //INSERTAR
+          mysqli_query($conexion, "INSERT INTO $tabla_db1 
+          (doc, nombre, direccion, telefono) 
+            values 
+          ('$doc','$nombre','$dir','$tel')");
+        }
       }
 
       if(isset($_POST['btn_actualizar']))
       {
-        echo "Presiono el boton actualizar";
+        $doc = $_POST['doc'];
+        $nombre = $_POST['nombre'];
+        $dir = $_POST['dir'];
+        $tel = $_POST['tel'];        
+        
+        if ($doc =="" || $nombre =="" || $dir ==""){
+          echo "Los campos son obligatorios";
+        }else{
+          //ACTUALIZAR 
+          $_UPDATE_SQL="UPDATE $tabla_db1 Set 
+          doc='$doc', 
+          nombre='$nombre',          
+          direccion='$dir', 
+          telefono='$tel'
+
+          WHERE doc='$doc'"; 
+
+          mysqli_query($conexion,$_UPDATE_SQL); 
+        }
       }
 
       if(isset($_POST['btn_eliminar']))
